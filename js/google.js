@@ -37,8 +37,8 @@ export function signIn() {
   const id = clientId();
   if (!id) throw new Error('クライアント ID が未設定です');
   const state = Math.random().toString(36).slice(2);
-  sessionStorage.setItem('aic.oauthState', state);
-  sessionStorage.setItem('aic.returnHash', location.hash.startsWith('#access_token') ? '' : location.hash);
+  localStorage.setItem('aic.oauthState', state);
+  localStorage.setItem('aic.returnHash', location.hash.startsWith('#access_token') ? '' : location.hash);
   const params = new URLSearchParams({
     client_id: id,
     redirect_uri: redirectUri(),
@@ -55,10 +55,10 @@ export function handleRedirect() {
   const hash = location.hash;
   if (!hash.includes('access_token=') && !hash.includes('error=')) return null;
   const p = new URLSearchParams(hash.slice(1));
-  const back = sessionStorage.getItem('aic.returnHash') || '#calendar';
+  const back = localStorage.getItem('aic.returnHash') || '#calendar';
   history.replaceState(null, '', location.pathname + back);
   if (p.get('error')) return { error: p.get('error'), back };
-  if (p.get('state') !== sessionStorage.getItem('aic.oauthState')) return { error: 'state_mismatch', back };
+  if (p.get('state') !== localStorage.getItem('aic.oauthState')) return { error: 'state_mismatch', back };
   localStorage.setItem(TOKEN_KEY, JSON.stringify({
     accessToken: p.get('access_token'),
     expiresAt: Date.now() + Number(p.get('expires_in') || 3600) * 1000,
