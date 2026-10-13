@@ -1,5 +1,5 @@
 // アプリ本体はネット優先・オフライン時はキャッシュ。Google の通信はキャッシュしない。
-const CACHE_NAME = 'allincalendar-v1';
+const CACHE_NAME = 'allincalendar-v2';
 const ASSETS = [
   './', './index.html', './manifest.json', './css/style.css',
   './js/app.js', './js/util.js', './js/calc.js', './js/settings.js', './js/google.js', './js/data.js',

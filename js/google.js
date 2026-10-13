@@ -27,8 +27,9 @@ function token() {
 
 export function hasValidToken() { return !!token(); }
 
+/** ホーム画面から開くと /index.html になるので、末尾をそろえる */
 export function redirectUri() {
-  return location.origin + location.pathname;
+  return location.origin + location.pathname.replace(/index\.html$/, '');
 }
 
 /** Google のログイン画面へ移動する */
